@@ -1,28 +1,37 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { FilterProps } from '../../types/types';
+import '../stylesheets/filter.css';
+import Form from 'react-bootstrap/Form';
+import { CheckboxComponent } from './Checkbox';
 
-const Filter: React.FC = () => {
+const Filter = (props: FilterProps): JSX.Element => {
+  const {
+    handleChangeDistrict,
+    districtInput,
+    handleChangeCheckbox,
+    isChecked,
+  } = props;
 
-    const [state, setState] = useState({
-        districtInput: '',
-        activeToggle: false
-    });
-
-    const handleChange = () => {
-        console.log('');
-    };
-
-    return (
-        <div>
-            <label htmlFor="district">Filter by District: </label>
-            <select name="district" value={state.districtInput} onChange={handleChange}>
-                <option>District One</option>
-                <option>District Two</option>
-            </select>
-            <br/>
-            <label htmlFor="activeUsers">Active Users Only: </label>
-            <input type="checkbox" name="activeUsers" checked={state.activeToggle} onChange={handleChange} />
-        </div>
-    );
+  return (
+    <div className='filter'>
+      <label htmlFor='district'>Filter by District </label>
+      <Form.Select
+        name='district'
+        value={districtInput}
+        onChange={handleChangeDistrict}
+      >
+        <option value={0}>Select a District</option>
+        <option value={1}>District One</option>
+        <option value={2}>District Two</option>
+        <option value={3}>District Three</option>
+        <option value={4}>District Four</option>
+      </Form.Select>
+      <CheckboxComponent
+        checked={isChecked}
+        handleChangeCheckbox={handleChangeCheckbox}
+      />
+    </div>
+  );
 };
 
 export default Filter;

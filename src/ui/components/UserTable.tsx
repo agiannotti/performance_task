@@ -1,68 +1,80 @@
-import React from 'react';
-import Filter from './Filter';
+import React, { FC } from 'react';
+import { Users } from '../../types/types';
+import '../stylesheets/usertable.css';
+import Button from 'react-bootstrap/Button';
+import { connect } from 'react-redux';
+import { removeUser, editUser } from '../../redux/userSlice';
+import EditModal from '../forms/EditModal';
+//eslint-disable-next-line
+const UserTable: FC<Users> = (props: any) => {
+  const { users } = props;
+  const handleEdit = (evt) => {
+    editUser(evt.target.value);
+  };
 
-const UserTable: React.FC = () => {
+  const handleDelete = (evt) => {
+    props.removeUser(evt.target.value);
+  };
 
-    const handleEditUser = () => {
-        console.log('');
-    };
-
-    const handleDeleteUser = () => {
-        console.log('');
-    };
+  const tableRows = users.map((user) => {
+    const {
+      id,
+      last_name,
+      first_name,
+      email,
+      middle_initial,
+      district,
+      created_at,
+    } = user;
 
     return (
-        <div className="admin-user-table" style={{marginTop: '7rem'}}>
-            <Filter />
-            
-            <div style={{border: '1px solid black', width: '50rem', marginTop: '2rem'}}>
-                <h2 style={{textAlign: 'center', textDecoration: 'underline'}}>Users</h2>
-                <ul style={{listStyle: 'none', paddingLeft: 0, height: '30rem'}}>
-                    <li style={{fontWeight: 700, borderBottom: '2px solid black', marginBottom: '1rem', padding: '1rem'}}>
-                        <div style={{display: 'flex', justifyContent: 'space-evenly', textAlign: 'center'}}>
-                            <div style={{width: '5%'}}>ID</div>
-                            <div style={{width: '20%'}}>Last Name</div>
-                            <div style={{width: '20%'}}>First Name</div>
-                            <div style={{width: '5%'}}>M.I.</div>
-                            <div style={{width: '20%'}}>District</div>
-                            <div style={{width: '10%'}}>Verified</div>
-                            <div style={{width: '20%'}}>Created</div>
-                        </div>
-                    </li>
-                    <li style={{marginBottom: '2rem', background: '#fff', border: '1px solid black', padding: '1rem'}}>
-                        <div style={{display: 'flex', justifyContent: 'space-evenly', textAlign: 'center', marginBottom: '0.5rem'}}>
-                            <div style={{width: '5%'}}>108</div>
-                            <div style={{width: '20%'}}>Smith</div>
-                            <div style={{width: '20%'}}>Robert</div>
-                            <div style={{width: '5%'}}>J</div>
-                            <div style={{width: '20%'}}>Cure District</div>
-                            <div style={{width: '10%'}}>True</div>
-                            <div style={{width: '20%'}}>June 18, 2020</div>
-                        </div>
-                        <div style={{marginLeft: 'auto', width: '10rem', display: 'flex', justifyContent: 'space-between', paddingRight: '2rem'}}>
-                            <button type="button">Edit</button>
-                            <button type="button">Delete</button>
-                        </div>
-                    </li>
-                    <li style={{marginBottom: '2rem', background: '#fff', border: '1px solid black', padding: '1rem'}}>
-                        <div style={{display: 'flex', justifyContent: 'space-evenly', textAlign: 'center', marginBottom: '0.5rem'}}>
-                            <div style={{width: '5%'}}>142</div>
-                            <div style={{width: '20%'}}>Morrissey</div>
-                            <div style={{width: '20%'}}>Steven</div>
-                            <div style={{width: '5%'}}>P</div>
-                            <div style={{width: '20%'}}>Cure District</div>
-                            <div style={{width: '10%'}}>True</div>
-                            <div style={{width: '20%'}}>June 18, 2020</div>
-                        </div>
-                        <div style={{marginLeft: 'auto', width: '10rem', display: 'flex', justifyContent: 'space-between', paddingRight: '2rem'}}>
-                            <button type="button">Edit</button>
-                            <button type="button">Delete</button>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+      <tr key={id}>
+        <td>
+          {last_name}, {first_name} {middle_initial}
+        </td>
+        <td>{email}</td>
+        <td>{district}</td>
+        <td>{created_at}</td>
+        <td>
+          {/* <Button variant='primary' onClick={handleEdit} value={id}>
+            Edit
+          </Button> */}
+          <EditModal value={id} />
+
+          <Button onClick={handleDelete} value={id}>
+            Delete
+          </Button>
+        </td>
+      </tr>
     );
+  });
+
+  const tableHeader = (
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>District</th>
+      <th>Date Registered</th>
+      <th></th>
+    </tr>
+  );
+
+  return (
+    <table className='usertable'>
+      <thead>{tableHeader}</thead>
+      <tbody>{tableRows}</tbody>
+    </table>
+  );
 };
 
-export default UserTable;
+const mapDispatchToProps = (dispatch) => ({
+  removeUser: (event) => dispatch(removeUser(event)),
+  editUser: (event) => dispatch(editUser(event)),
+});
+
+const mapStateToProps = (state) => {
+  return {
+    props: state.users.users,
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(UserTable);

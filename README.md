@@ -1,68 +1,41 @@
-Thank you for taking the time to take the InquirED React/Typescript Performance task.
+# InquirED Code Challenge
 
-As developers at InquirEd, we strive to deliver products with accessible, responsive, and intuitive front end designs.
+## Summary
 
-This performance task will test your ability to visualize, filter, and update large collections of data.
+```
+npm install
+npm start
+```
 
-Clone down this repository and create a new branch titled with your_name
+## User Stories
 
-Open the repository in your favorite code-editor and run:
+## Technologies Used
 
-    - npm install
-    - npm start
+- TypeScript
+- Redux
+- Thunk
+- React-hook-form
 
-What you are being handed is a skeleton of the completed feature.  We are more interested in how you make this project yours as opposed to simply being able to build it.
+## What I Learned
 
-When you are finished, push changes to your branch and let us know you are done working.
+This project was a great opportunity to get more familiar with Redux toolkit documentation, TypeScript, and form validation using react-hook-forms
 
-The Task:
-Build a UserTable component that lists the entries within the /public/users.json collection.
-    The component should:
-	
-        - 'fetch()' the users.json to demonstrate Promise handling
-        - set the user collection as state
-        - list the users in an admin-panel style table with action-buttons to edit and delete users
-        - handle events to edit and delete users
-        - deleting a user should trigger a confirmation modal
-            - deleting should simply remove that user from the user collection in state.
+## Areas for improvement
 
-Build a Filter component that sorts/filters the users collection
-    The filter should be able to select users that
-	
-        - are currently active/inactive (toggle)
-        - belong to the same district (dropdown select)
+- Modularization
 
-Build a NewUser form component
-    The component should have the following fields with respective validations:
-	
-        - firstName *required, only letters
-        - middleInitial *not required, single letter only
-        - lastName *required, only letters
-        - email *required, valid email (includes '@something.com')
-        - active *required
-        - district *required
-            - district options must match those from the /public/districts.json;
-            - the values should be the district id's
-   Submitting a new user should:
-   
-        - append a new User object to the user collection in state
-		- should include all the fields other User entries have
-        - "verified" should default to false
-        - "createdAt" should be a SQL style Timestamp
+- pagination
 
-Guidelines/Rules:
+- Relying on component state for filter function created many issues for filtering by active, and using user id to edit/delete filtered results
 
-    - You can use any packages/libraries you'd like
-    - You can use any CSS framework (if so desired)
-    - You should create TS interfaces for User and District
-    - Any props should be typed (*i.e. const Component = (prop1: string, prop2: number) => {}*)
-    - change anything you want/need to in order to complete the task
-    - ask as many questions as you want/need to in order to complete the task
-    - Go as far beyond the requirements as you see fit
-    - Yes, semi-colons.
+- Overall design and form validation could be elaborated on
 
-Expectations:
+- Improved typing for change events when passing props to children components
 
-    My expectation is that you make this feature as full and real as possible.
-    You should have a strong sense of design, and what makes a feature intuitive/accessible.
-    Take your time and have fun with it!
+###### To address this in the future, I intend to:
+
+- Leverage the benefits of using redux selectors
+
+- Utilize more state slices via redux toolkit
+
+- Further extraction and modularization of components

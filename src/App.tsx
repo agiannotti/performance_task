@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Main from './ui/layout/Main';
-import Navbar from './ui/layout/Navbar';
+import Navigation from './ui/layout/Navigation';
 
-const App: React.FC = () => {
-    return (
-        <div className="App">
-            <Navbar />
-            <Main />
-        </div>
-    );
+const App: FC = () => {
+  return (
+    <div className='App container'>
+      <Navigation />
+      <Main />
+    </div>
+  );
 };
 
 export default App;
